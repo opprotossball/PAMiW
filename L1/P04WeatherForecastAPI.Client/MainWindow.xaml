@@ -1,0 +1,39 @@
+﻿<Window x:Class="P04WeatherForecastAPI.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:P04WeatherForecastAPI.Client"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="900">
+    <DockPanel>
+        <StackPanel Background="LightSeaGreen" Width="450" DockPanel.Dock="Left">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="10,5,10,0"/>
+                </Style>
+            </StackPanel.Resources>
+            <Label Content="City:" />
+            <TextBox x:Name="txtCity"/>
+            <ListBox x:Name="lbData" DisplayMemberPath="LocalizedName" SelectionChanged="lbData_SelectionChanged"/>
+            <Label Content="Mode:" />
+            <Label x:Name="lblMode" HorizontalAlignment="Center" Content="..."></Label>
+            <Button x:Name="btnSearch" Content="Search" Click="btnSearch_Click"/>
+            <Label Content="" />
+            <Button x:Name="btnCurrent" Content="Current Conditions" Click="btnCurrent_Click"/>
+            <Button x:Name="btn1d" Content="1 Day Forecast" Click="btn1day_Click"/>
+            <Button x:Name="btn5d" Content="5 Days Forecast" Click="btn5days_Click"/>
+            <Button x:Name="btn10d" Content="10 Days Forecast" Click="btn10days_Click"/>
+            <Button x:Name="btnHistorical" Content="Yesterday" Click="btnHistorical_Click"/>
+
+        </StackPanel>
+        <StackPanel Background="LightSeaGreen">
+            <Label HorizontalAlignment="Center" Content="Location:"></Label>
+            <Label x:Name="lblCityName" HorizontalAlignment="Center" Content="..."></Label>
+            <Label  HorizontalAlignment="Center" Content="Temperature:"></Label>
+            <Label x:Name="lblTemperatureValue" HorizontalAlignment="Center" Content="..."></Label>
+            <Label  HorizontalAlignment="Center" Content="Precipitation:"></Label>
+            <Label x:Name="lblPrecipitation" HorizontalAlignment="Center" Content="..."></Label>
+        </StackPanel>
+    </DockPanel>
+</Window>
