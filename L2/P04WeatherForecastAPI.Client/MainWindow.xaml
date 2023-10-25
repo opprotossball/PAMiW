@@ -1,0 +1,63 @@
+﻿<Window x:Class="P04WeatherForecastAPI.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:P04WeatherForecastAPI.Client"
+        xmlns:converters="clr-namespace:P04WeatherForecastAPI.Client.Converters"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="900">
+    <Window.Resources>
+        <converters:TemperatureToDisplayConverter x:Key="tmpToDispConv"></converters:TemperatureToDisplayConverter>
+        <Style x:Key="mainButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="Foreground" Value="DarkBlue"/>
+        </Style>
+        <Style x:Key="mainLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Margin="5" Background="LightSeaGreen" >
+            <Label Content="City:" Style="{StaticResource mainLabelStyle}" />
+            <TextBox x:Name="txtCity"/>
+            <ListBox x:Name="lbData" DisplayMemberPath="LocalizedName" ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}"/>
+            <ComboBox x:Name="comboModes" ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" Margin="0,10,0,0"></ComboBox>
+            <Button x:Name="btnSearch" Content="Search" Command="{Binding LoadCitiesCommand}" CommandParameter="{Binding Text, ElementName=txtCity}"></Button>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Margin="5" Background="LightSeaGreen" >
+            <Label HorizontalAlignment="Center" Content="Temperature for city:" Style="{StaticResource mainLabelStyle}"></Label>
+            <Label x:Name="lblCityName" Content="{Binding SelectedCity.LocalizedName}" Style="{StaticResource mainLabelStyle}"></Label>
+            <Label x:Name="lblWeatherText" Content="{Binding WeatherView.WeatherText}" Style="{StaticResource mainLabelStyle}"></Label>
+            <Label x:Name="lblTemperatureValue" Content="{Binding WeatherView.CurrentTemperature, Converter={StaticResource tmpToDispConv}}" Style="{StaticResource mainLabelStyle}"></Label>
+            <Image Source="{Binding WeatherView.Image}" Height="100" />
+
+            <ListView ItemsSource="{Binding DailyForecasts.Forecasts}" Background="LightSeaGreen">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Label Content="Min temperature:" Style="{StaticResource mainLabelStyle}" />
+                            <Label x:Name="lblMinTemperatureValue" Content="{Binding MinTemperature, Converter={StaticResource tmpToDispConv}}" Style="{StaticResource mainLabelStyle}"></Label>
+                            <Label Content="Max temperature:" Style="{StaticResource mainLabelStyle}" />
+                            <Label x:Name="lblMaxTemperatureValue" Content="{Binding MaxTemperature, Converter={StaticResource tmpToDispConv}}" Style="{StaticResource mainLabelStyle}"></Label>
+                            <Image Source="{Binding ImagePath}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+        </StackPanel>
+    </Grid>
+</Window>

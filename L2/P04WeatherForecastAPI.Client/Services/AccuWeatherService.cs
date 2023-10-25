@@ -6,19 +6,17 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace P04WeatherForecastAPI.Client.Services
 {
-    internal class AccuWeatherService
+    internal class AccuWeatherService : IAccuWeatherService
     {
         private const string base_url = "http://dataservice.accuweather.com";
         private const string autocomplete_endpoint = "locations/v1/cities/autocomplete?apikey={0}&q={1}&language{2}";
         private const string current_conditions_endpoint = "currentconditions/v1/{0}?apikey={1}&language{2}";
         private const string daily_1_forecast_endpoint = "forecasts/v1/daily/1day/{0}?apikey={1}&language{2}";
         private const string daily_5_forecast_endpoint = "forecasts/v1/daily/5day/{0}?apikey={1}&language{2}";
-        private const string daily_10_forecast_endpoint = "forecasts/v1/daily/10day/{0}?apikey={1}&language{2}";
         private const string historical_conditions_endpoint = "currentconditions/v1/{0}/historical/24?apikey={1}&language{2}";
 
         string api_key;
@@ -46,15 +44,8 @@ namespace P04WeatherForecastAPI.Client.Services
                 var response = await client.GetAsync(uri);
                 string json = await response.Content.ReadAsStringAsync();
                 City[] cities;
-                try
-                {
-                    cities = JsonConvert.DeserializeObject<City[]>(json);
-                } 
-                catch
-                {
-                    Debug.Write(json);
-                    throw new Exception("Could not get data from api");
-                }
+                cities = JsonConvert.DeserializeObject<City[]>(json);
+                Debug.Write(json);
                 return cities;
             }
         }
@@ -67,15 +58,8 @@ namespace P04WeatherForecastAPI.Client.Services
                 var response = await client.GetAsync(uri);
                 string json = await response.Content.ReadAsStringAsync();
                 Weather[] weathers;
-                try
-                {
-                    weathers = JsonConvert.DeserializeObject<Weather[]>(json);
-                }
-                catch
-                {
-                    Debug.Write(json);
-                    throw new Exception("Could not get data from api");
-                }
+                weathers = JsonConvert.DeserializeObject<Weather[]>(json);
+                Debug.Write(json);
                 return weathers.FirstOrDefault();
             }
         }
@@ -88,15 +72,8 @@ namespace P04WeatherForecastAPI.Client.Services
                 var response = await client.GetAsync(uri);
                 string json = await response.Content.ReadAsStringAsync();
                 Weather[] weathers;
-                try
-                {
-                    weathers = JsonConvert.DeserializeObject<Weather[]>(json);
-                }
-                catch
-                {
-                    Debug.Write(json);
-                    throw new Exception("Could not get data from api");
-                }
+                weathers = JsonConvert.DeserializeObject<Weather[]>(json);
+                Debug.Write(json);
                 return weathers.FirstOrDefault();
             }
         }
@@ -112,9 +89,6 @@ namespace P04WeatherForecastAPI.Client.Services
                 case 5:
                     endPoint = daily_5_forecast_endpoint;
                     break;
-                case 10:
-                    endPoint = daily_10_forecast_endpoint;
-                    break;
                 default:
                     throw new Exception("Not supported number of days");
             }
@@ -123,8 +97,8 @@ namespace P04WeatherForecastAPI.Client.Services
             {
                 var response = await client.GetAsync(uri);
                 string json = await response.Content.ReadAsStringAsync();
-                Debug.Write(json);
                 DailyForecast[] forecast = JsonConvert.DeserializeAnonymousType(json, new { DailyForecasts = new DailyForecast[days] }).DailyForecasts;
+                Debug.Write(json);
                 return forecast;
             }
         }
