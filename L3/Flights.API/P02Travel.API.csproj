@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Folder Include="Properties\" />
+	</ItemGroup>
+
+    <ItemGroup>
+	    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
+	    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\P05Travel.DataSeeder\P05Travel.DataSeeder.csproj" />
+      <ProjectReference Include="..\TravelApp.Shared\P03Travel.Shared.csproj" />
+    </ItemGroup>
+	
+</Project>
