@@ -41,6 +41,7 @@ namespace P04WeatherForecastAPI.Client.Services
         public async Task<ServiceResponse<List<Flight>>> GetFlightsAsync(int num)
         {
             string endpoint = string.Format(_appSettings.FlightAPI.FirstNFlightsEndpoint, num);
+            Debug.WriteLine(endpoint);
             var response = await _httpClient.GetAsync(endpoint);
             if (!response.IsSuccessStatusCode)
             {

@@ -7,7 +7,6 @@ using P04WeatherForecastAPI.Client.ViewModels;
 using System;
 using System.IO;
 using System.Windows;
-using System.Net.Http;
 using System.Diagnostics;
 
 namespace P04WeatherForecastAPI.Client

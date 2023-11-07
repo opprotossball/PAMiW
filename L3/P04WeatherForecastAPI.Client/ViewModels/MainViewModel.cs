@@ -84,6 +84,10 @@ namespace P04WeatherForecastAPI.Client.ViewModels
         [RelayCommand]
         public async void LoadCities(string locationName)
         {
+            if (locationName == null || locationName.Length == 0) 
+            {
+                return;
+            }
             var cities = await _accuWeatherService.GetLocations(locationName);
             Cities.Clear();
             foreach (var city in cities)
