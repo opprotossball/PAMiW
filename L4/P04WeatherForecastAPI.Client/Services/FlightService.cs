@@ -33,17 +33,43 @@ namespace P04WeatherForecastAPI.Client.Services
 
         public async Task<ServiceResponse<bool>> DeleteFlightAsync(int id)
         {
-            var response = await _httpClient.DeleteAsync($"{id}");
-            var result = await response.Content.ReadFromJsonAsync<ServiceResponse<bool>>();
-            return result;
+            try
+            {
+                string endpoint = string.Format(_appSettings.FlightAPI.GetByIdEndpoint, id);
+                var response = await _httpClient.DeleteAsync(endpoint);
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ServiceResponse<bool>>(json);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse<bool>()
+                {
+                    Data = false,
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
         }
 
         public async Task<ServiceResponse<Flight>> GetFlightAsync(int id)
         {
-            throw new NotImplementedException();
-            //var response = await _httpClient.GetAsync($"{id}");
-            //var result = await response.Content.ReadFromJsonAsync<ServiceResponse<bool>>();
-            //return result;
+            try
+            {
+                string endpoint = string.Format(_appSettings.FlightAPI.GetByIdEndpoint, id);
+                var response = await _httpClient.GetAsync(endpoint);
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ServiceResponse<Flight>>(json);
+                return result;
+            }
+            catch (Exception ex) 
+            {
+                return new ServiceResponse<Flight>()
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
         }
 
         public async Task<ServiceResponse<List<Flight>>> GetFlightsAsync(int num)

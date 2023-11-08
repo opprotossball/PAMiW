@@ -33,7 +33,9 @@
             <TextBox Text="{Binding From}"/>
             <Label Content="To:" Style="{StaticResource mainLabelStyle}" />
             <TextBox Text="{Binding To}"/>
-            <Button Content="Search relation" Command="{Binding SearchFlightsCommand}" Style="{StaticResource mainButtonStyle}"></Button>
+            <Label Content="Flight ID:" Style="{StaticResource mainLabelStyle}" />
+            <TextBox Text="{Binding Id}"/>
+            <Button Content="Search" Command="{Binding SearchFlightsCommand}" Style="{StaticResource mainButtonStyle}" Click="Button_Click"></Button>
             <Button Content="Best offers" Command="{Binding ShowBestOffersCommand}" Style="{StaticResource mainButtonStyle}"></Button>
             <Button Content="Flight Manager" Command="{Binding OpenFlightManagerCommand}" Style="{StaticResource mainButtonStyle}"></Button>
         </StackPanel>
@@ -61,6 +63,12 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Flight: " />
+                                <Label>
+                                    <TextBlock Text="{Binding Id}" TextAlignment="Center" />
+                                </Label>
+                            </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label>
                                     <TextBlock Text="{Binding Airlines}" TextAlignment="Center" />

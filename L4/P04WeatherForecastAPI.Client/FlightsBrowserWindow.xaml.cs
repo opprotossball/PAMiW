@@ -10,5 +10,10 @@ namespace P04WeatherForecastAPI.Client
             DataContext = flightsViewModel;
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

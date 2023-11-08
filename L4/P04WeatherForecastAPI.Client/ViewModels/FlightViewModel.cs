@@ -13,6 +13,7 @@ namespace P04WeatherForecastAPI.Client.ViewModels
     {
         public string From { get; set; }
         public string To { get; set; }
+        public int Id { get; set; } 
         private readonly IFlightService _flightService;
         private readonly IServiceProvider _serviceProvider;
         public ObservableCollection<Flight> Flights { get; set; }
@@ -27,9 +28,29 @@ namespace P04WeatherForecastAPI.Client.ViewModels
         [RelayCommand]
         public async void SearchFlights()
         {
-            //Flights = new ObservableCollection<Flight>();
+            Flights.Clear();
+            if (!string.IsNullOrEmpty(From) && !string.IsNullOrEmpty(To))
+            {
+                SearchRelation();
+            }
+            else if (Id != 0)
+            {
+                SearchById();
+            }
+        }
+
+        private async void SearchById()
+        {
+            var result = await _flightService.GetFlightAsync(Id);
+            if (result.Success)
+            {
+                Flights.Add(result.Data);
+            }
+        }
+
+        private async void SearchRelation()
+        {
             var result = await _flightService.GetFromToAsync(From, To);
-            
             if (result.Success)
             {
                 foreach (var f in result.Data)
@@ -42,10 +63,10 @@ namespace P04WeatherForecastAPI.Client.ViewModels
         [RelayCommand]
         public async void ShowBestOffers()
         {
-            //Flights = new ObservableCollection<Flight>();
             var result = await _flightService.GetFlightsAsync(10);
             if (result.Success)
             {
+                Flights.Clear();
                 foreach (var f in result.Data)
                 {
                     Flights.Add(f);

@@ -30,7 +30,7 @@ namespace Travel.API.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet]
         public async Task<ActionResult<ServiceResponse<Flight>>> GetFlight([FromQuery] int id)
         {
             var result = await _flightService.GetFlightAsync(id);
@@ -58,7 +58,7 @@ namespace Travel.API.Controllers
             }
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteFlight([FromRoute] int id)
         {
             var result = await _flightService.DeleteFlightAsync(id);
