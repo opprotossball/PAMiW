@@ -1,0 +1,51 @@
+﻿<Window x:Class="P04WeatherForecastAPI.Client.FlightsManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:P04WeatherForecastAPI.Client"
+        mc:Ignorable="d"
+        Title="Flights Manager" Height="600" Width="300">
+    
+    <Window.Resources>
+        <Style x:Key="mainButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="LightSeaGreen"/>
+        </Style>
+        <Style x:Key="mainLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Resources>
+
+   
+        <StackPanel  Margin="5" Background="LightSeaGreen" >
+            <Label Content="ID:" Style="{StaticResource mainLabelStyle}" />
+            <TextBox Text="{Binding FlightID}"/>
+            <Button Content="Delete flight" Command="{Binding DeleteFlightCommand}" Style="{StaticResource mainButtonStyle}"></Button>
+
+            <Label Content="Airlines:" Style="{StaticResource mainLabelStyle}" />
+        <TextBox Text="{Binding FlightAirlines}"/>
+
+            <Label Content="From:" Style="{StaticResource mainLabelStyle}" />
+        <TextBox Text="{Binding FlightFrom}"/>
+
+            <Label Content="To:" Style="{StaticResource mainLabelStyle}" />
+        <TextBox Text="{Binding FlightTo}"/>
+
+            <Label Content="Price:" Style="{StaticResource mainLabelStyle}" />
+        <TextBox Text="{Binding FlightPrice}"/>
+
+            <Label Content="Departure:" Style="{StaticResource mainLabelStyle}" />
+        <TextBox Text="{Binding FlightDeparture}"/>
+
+        <Button Content="Add flight" Command="{Binding AddFlightCommand}" Style="{StaticResource mainButtonStyle}"></Button>
+        <Button Content="Modify flight" Command="{Binding ModifyFlightCommand}" Style="{StaticResource mainButtonStyle}"></Button>
+    </StackPanel>
+
+
+</Window>
