@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+        <UserSecretsId>ef015743-d986-4200-867a-c9cc36f59e03</UserSecretsId>
+    </PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Images\rain.png" />
+		<None Remove="Images\sun.png" />
+		<None Remove="ExampleJsons\Cities.json" />
+		<None Remove="ExampleJsons\Forecast.json" />
+		<None Remove="ExampleJsons\Weather.json" />
+	</ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+    </ItemGroup>
+	
+    <ItemGroup>
+      <ProjectReference Include="..\TravelApp.Shared\P03Travel.Shared.csproj" />
+    </ItemGroup>
+
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	
+    <ItemGroup>
+        <Resource Include="Images\rain.png" />
+		<Resource Include="Images\sun.png" />
+		<Resource Include="ExampleJsons\Cities.json">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="ExampleJsons\Forecast.json">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="ExampleJsons\Weather.json">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+	</ItemGroup>
+
+</Project>
