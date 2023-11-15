@@ -1,0 +1,11 @@
+﻿@model P07TravelWebApp.Client.Models.FlightSearchModel
+
+<form asp-controller="RelationSearch" asp-action="RelationSearch" method="post">
+    <label for="DepartureAirport">Departure Airport:</label>
+    <input type="text" id="DepartureAirport" name="DepartureAirport" value="@Model.DepartureAirport" />
+
+    <label for="ArrivalAirport">Arrival Airport:</label>
+    <input type="text" id="ArrivalAirport" name="ArrivalAirport" value="@Model.ArrivalAirport" />
+
+    <button type="submit">Search Flights</button>
+</form>

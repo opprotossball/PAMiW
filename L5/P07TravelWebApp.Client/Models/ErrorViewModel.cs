@@ -1,4 +1,4 @@
-namespace P09ShopWebAPPMVC.Client.Models
+namespace P07TravelWebApp.Client.Models
 {
     public class ErrorViewModel
     {

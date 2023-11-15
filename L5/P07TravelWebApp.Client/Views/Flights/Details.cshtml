@@ -1,5 +1,5 @@
-@*@using P06Shop.Shared.Shop;
-@model Product
+@using P03Travel.Shared.Travels;
+@model Flight
 
 @{
     ViewData["Title"] = "Details";
@@ -8,26 +8,26 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Product</h4>
+    <h4>Flight</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Airlines)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Airlines)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.From)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.From)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Barcode)
+            @Html.DisplayNameFor(model => model.To)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Barcode)
+            @Html.DisplayFor(model => model.To)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Price)
@@ -36,10 +36,10 @@
             @Html.DisplayFor(model => model.Price)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReleaseDate)
+            @Html.DisplayNameFor(model => model.DepartureTime)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReleaseDate)
+            @Html.DisplayFor(model => model.DepartureTime)
         </dd>
     </dl>
 </div>
@@ -47,4 +47,3 @@
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
-*@

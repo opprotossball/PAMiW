@@ -3,7 +3,7 @@ using P03Travel.Shared;
 using P03Travel.Shared.Travels;
 using P03Travel.Shared.Services.FlightService;
 
-namespace Travel.API.Controllers
+namespace P02Travel.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

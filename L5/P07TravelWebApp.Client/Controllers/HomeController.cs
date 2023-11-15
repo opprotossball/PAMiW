@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using P09ShopWebAPPMVC.Client.Models;
 using System.Diagnostics;
+using P07TravelWebApp.Client.Models;
 
-namespace P09ShopWebAPPMVC.Client.Controllers
+namespace P07TravelWebApp.Client.Controllers
 {
     public class HomeController : Controller
     {
