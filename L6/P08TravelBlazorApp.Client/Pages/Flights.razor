@@ -3,8 +3,7 @@
 @inject IFlightService FlightService
 @inject NavigationManager NavigationManager
 
-<h3>Full list of flights</h3>
-
+<h3>All flights</h3>
 
 <p>
 	<a href="flights/addflight">Add flight</a>
@@ -51,18 +50,16 @@ else
 	</table>
 	<button class="btn btn-primary" disabled="@(currentPage==1)" @onclick="PreviousPage">Previous</button>
 	<span>@currentPage</span>
-	<button class="btn btn-primary" @onclick="NextPage">Next</button>
+	<button class="btn btn-primary" disabled="@lastPage" @onclick="NextPage">Next</button>
 }
-
-
 
 @code {
 	private List<Flight> flights;
 	private string message = "Loading data...";
 
-	private int currentPage = 0;
+	private int currentPage = 1;
 	private const int pageSize = 10;
-
+	private bool lastPage = false;
 	private string searchTerm = "";
 
 	protected override async Task OnInitializedAsync()
@@ -74,7 +71,7 @@ else
 	{
 		if (string.IsNullOrEmpty(searchTerm))
 		{
-			var response = await FlightService.GetFlightsAsync(currentPage, pageSize);
+			var response = await FlightService.GetFlightsAsync(currentPage - 1, pageSize);
 			if (response.Success)
 			{
 				flights = response.Data;
@@ -86,7 +83,7 @@ else
 		}
 		else
 		{
-			var response = await FlightService.SearchFlightsAsync(searchTerm, currentPage, pageSize);
+			var response = await FlightService.SearchFlightsAsync(searchTerm, currentPage - 1, pageSize);
 			if (response.Success)
 			{
 				flights = response.Data;
@@ -108,6 +105,7 @@ else
 		if (currentPage > 1)
 		{
 			currentPage--;
+			lastPage = false;
 			await LoadData();
 		}
 	}
@@ -116,6 +114,7 @@ else
 	{
 		if (flights == null || flights.Count == 0)
 		{
+			lastPage = true;
 			return;
 		}
 		currentPage++;
@@ -124,7 +123,8 @@ else
 
 	private async Task Search()
 	{
-		currentPage = 0;
+		currentPage = 1;
+		lastPage = false;
 		await LoadData();
 	}
 }
