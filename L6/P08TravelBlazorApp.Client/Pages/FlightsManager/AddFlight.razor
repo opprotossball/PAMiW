@@ -1,0 +1,33 @@
+﻿@page "/flights/addflight"
+
+@inject IFlightService FlightService;
+@inject NavigationManager NavigationManager
+
+<h2>Add Flight</h2>
+
+@if (message != null)
+{
+	<p><b>message</b></p>
+}
+else
+{
+	<FlightForm Flight="flight" OnValidSubmit="ValidSubmit"></FlightForm>
+}
+
+@code {
+	private Flight flight = new Flight();
+	private string? message = null;
+
+	async Task ValidSubmit()
+	{
+		var response = await FlightService.AddFlightAsync(flight);
+		if (response.Success)
+		{
+			NavigationManager.NavigateTo("/flights");
+		}
+		else
+		{
+			message = response.Message;
+		}
+	}
+}
