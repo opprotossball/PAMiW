@@ -1,0 +1,130 @@
+﻿@page "/flights"
+
+@inject IFlightService FlightService
+@inject NavigationManager NavigationManager
+
+<h3>All flights</h3>
+
+<p>
+	<a href="flights/addflight">Add flight</a>
+</p>
+
+@if (flights == null)
+{
+	<p><em>@message</em></p>
+}
+else
+{
+	<div>
+		<InputText @bind-Value=searchTerm></InputText>
+		<button class="btn btn-primary" @onclick=Search>Search</button>
+	</div>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Airlines</th>
+				<th>From</th>
+				<th>To</th>
+				<th>Price</th>
+				<th>Departure</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var flight in flights)
+			{
+				<tr>
+					<td>@flight.Id</td>
+					<td>@flight.Airlines</td>
+					<td>@flight.From</td>
+					<td>@flight.To</td>
+					<td>@flight.Price</td>
+					<td>@flight.DepartureTime.ToShortDateString()</td>
+					<td>
+						<button class="btn btn-primary" @onclick="()=> GoToEdit(flight.Id)">Edit</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<button class="btn btn-primary" disabled="@(currentPage==1)" @onclick="PreviousPage">Previous</button>
+	<span>@currentPage</span>
+	<button class="btn btn-primary" disabled="@lastPage" @onclick="NextPage">Next</button>
+}
+
+@code {
+	private List<Flight> flights;
+	private string message = "Loading data...";
+
+	private int currentPage = 1;
+	private const int pageSize = 10;
+	private bool lastPage = false;
+	private string searchTerm = "";
+
+	protected override async Task OnInitializedAsync()
+	{
+		await LoadData();
+	}
+
+	private async Task LoadData()
+	{
+		if (string.IsNullOrEmpty(searchTerm))
+		{
+			var response = await FlightService.GetFlightsAsync(currentPage - 1, pageSize);
+			if (response.Success)
+			{
+				flights = response.Data;
+			}
+			else
+			{
+				message = response.Message;
+			}
+		}
+		else
+		{
+			var response = await FlightService.SearchFlightsAsync(searchTerm, currentPage - 1, pageSize);
+			if (response.Success)
+			{
+				flights = response.Data;
+			}
+			else
+			{
+				message = response.Message;
+			}
+		}
+	}
+
+	void GoToEdit(int id)
+	{
+		NavigationManager.NavigateTo($"/flights/editflight/{id}");
+	}
+
+	private async Task PreviousPage()
+	{
+		if (currentPage > 1)
+		{
+			currentPage--;
+			lastPage = false;
+			await LoadData();
+		}
+	}
+
+	private async Task NextPage()
+	{
+		if (flights == null || flights.Count == 0)
+		{
+			lastPage = true;
+			return;
+		}
+		currentPage++;
+		await LoadData();
+	}
+
+	private async Task Search()
+	{
+		currentPage = 1;
+		lastPage = false;
+		await LoadData();
+	}
+}

@@ -1,0 +1,99 @@
+﻿@page "/forecast"
+
+@inject IAccuWeatherService WeatherService
+@inject NavigationManager NavigationManager
+
+<h3>Forecast</h3>
+
+<div>
+	<label for="cityInput">City:</label>
+	<InputText @bind-Value=city></InputText>
+	<button class="btn btn-primary" @onclick=AutocompleteCity>Search</button>
+</div>
+
+@if (cities != null)
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Name</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var location in cities)
+			{
+				<tr>
+					<td>@location.LocalizedName</td>
+					<td>
+						<button class="btn btn-primary" @onclick="()=> SelectCity(location)">Select</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@if (forecasts != null)
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Min temperature</th>
+				<th>Max temperature</th>
+				<th>Precipitation </th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var forecast in forecasts)
+			{
+				<tr>
+					<td>@F2C(forecast.Temperature.Minimum.Value)</td>
+					<td>@F2C(forecast.Temperature.Maximum.Value)</td>
+					<td>@forecast.Day.HasPrecipitation</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<button class="btn btn-primary" @onclick="()=> Close()">Close</button>
+}
+
+@code {
+	private DailyForecast[]? forecasts;
+	private City[]? cities;
+	private string city = "";
+	private City? selectedCity;
+	private string message = "Loading forecast...";
+	private int nDays = 5;
+
+	private async Task AutocompleteCity()
+	{
+		if (string.IsNullOrEmpty(city))
+		{
+			return;
+		}
+		cities = await WeatherService.GetLocations(city);
+	}
+
+	private async Task SelectCity(City city)
+	{
+		selectedCity = city;
+		cities = null;
+		this.city = selectedCity.LocalizedName;
+		forecasts = await WeatherService.GetDailyForecast(selectedCity.Key, nDays);
+	}
+
+	private async Task Close()
+	{
+		forecasts = null;
+		selectedCity = null;
+		city = "";
+		cities = null;
+	}
+
+	private string F2C(double f)
+	{
+		double temp = TemperatureConverter.F2C(f);
+		return $"{temp.ToString("0.0")} °C";
+	}
+
+}

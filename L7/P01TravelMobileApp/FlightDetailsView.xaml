@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="P01TravelMobileApp.FlightDetailsView"
+             Title="Flight Details"
+             BackgroundColor="LightSeaGreen" >
+
+    <VerticalStackLayout>
+        <Grid BindingContext="{Binding Flight}"  Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Airlines:" Grid.Row="0" Grid.Column="0"/>
+            <Entry Text="{Binding Airlines}" Grid.Row="0" Grid.Column="1" BackgroundColor="SteelBlue"/>
+
+            <Label Text="From:" Grid.Row="1" Grid.Column="0"/>
+            <Entry Text="{Binding From}" Grid.Row="1" Grid.Column="1" BackgroundColor="SteelBlue"/>
+
+            <Label Text="To:" Grid.Row="2" Grid.Column="0"/>
+            <Entry Text="{Binding To}" Grid.Row="2" Grid.Column="1" BackgroundColor="SteelBlue"/>
+
+            <Label Text="Price:" Grid.Row="3" Grid.Column="0"/>
+            <Entry Text="{Binding Price, StringFormat='€{0:F2}'}" Grid.Row="3" Grid.Column="1" BackgroundColor="SteelBlue"/>
+
+            <Label Text="Departure Time:" Grid.Row="4" Grid.Column="0"/>
+            <Entry Text="{Binding DepartureTime}" Grid.Row="4" Grid.Column="1" BackgroundColor="SteelBlue"/>
+        </Grid>
+        <HorizontalStackLayout >
+            <Button Command="{Binding SaveCommand}" Text="Save" BackgroundColor="SteelBlue"></Button>
+            <Button Command="{Binding DeleteCommand}" Text="Delete" BackgroundColor="SteelBlue"></Button>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>
+    

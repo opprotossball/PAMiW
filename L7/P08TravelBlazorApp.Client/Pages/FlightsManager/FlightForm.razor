@@ -1,0 +1,36 @@
+﻿<h3>FlightForm</h3>
+
+<EditForm Model="Flight" OnValidSubmit="OnValidSubmit">
+	<DataAnnotationsValidator/>
+	<div class="form-group">
+		<label>Airlines:</label>
+		<InputText @bind-Value="Flight.Airlines" class="form-control"></InputText>
+	</div>
+	<div class="form-group">
+		<label>From:</label>
+		<InputText @bind-Value="Flight.From" class="form-control"></InputText>
+	</div>
+	<div class="form-group">
+		<label>To:</label>
+		<InputText @bind-Value="Flight.To" class="form-control"></InputText>
+	</div>
+	<div class="form-group">
+		<label>Price:</label>
+		<InputNumber @bind-Value="Flight.Price" class="form-control"></InputNumber>
+	</div>
+	<div class="form-group">
+		<label>Departure:</label>
+		<InputDate @bind-Value="Flight.DepartureTime" class="form-control"></InputDate>
+	</div>
+	<button type="submit" class="btn btn-primary">Update</button>
+</EditForm>
+
+@code {
+
+	[Parameter]
+	public Flight Flight { get; set; }
+
+	[Parameter]
+	public EventCallback OnValidSubmit { get; set; }
+
+}

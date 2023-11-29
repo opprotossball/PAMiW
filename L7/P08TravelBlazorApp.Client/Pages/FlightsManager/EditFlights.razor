@@ -1,0 +1,51 @@
+﻿@page "/flights/editflight/{Id:int}"
+
+@inject IFlightService FlightService
+@inject NavigationManager NavigationManager
+
+<h3>Edit Flight</h3>
+
+@if (flight == null)
+{
+    <p><em>@message</em></p>
+}
+else
+{
+    <FlightForm Flight="flight" OnValidSubmit="HandleValidSubmit"></FlightForm>
+    <button class="btn btn-danger" @onclick=HandleDelete>Delete</button>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Flight flight;
+    private string message = "Loading product...";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await FlightService.GetFlightAsync(Id);
+        if (response.Success)
+            flight = response.Data;
+        else
+            message = response.Message;
+    }
+
+    async Task HandleValidSubmit()
+    {
+        var response = await FlightService.ModifyFlightAsync(flight);
+        if (response.Success)
+            NavigationManager.NavigateTo("/flights");
+        else
+            message = response.Message;
+    }
+
+    async Task HandleDelete()
+    {
+        var response = await FlightService.ModifyFlightAsync(flight);
+        if (response.Success)
+            NavigationManager.NavigateTo("/flights");
+        else
+            message = response.Message;
+    }
+}
